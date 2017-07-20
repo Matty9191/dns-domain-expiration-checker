@@ -41,7 +41,7 @@ $ ns-domain-expiration-checker/ns-domain-expiration-checker.py ....
 </pre>
 6. Automate this process.
 
-Now if you are feeling frisky you can install the existing Python whois module (available via apt, yum and pip) and skip steps 1 - 3. If you get datatime format
+Now if you are feeling frisky you can install the existing Python whois module (available via apt, yum and pip) and skip steps 1 - 3. If you get a "Unknown date format" message when you run it you will need to install the newer Python whois module. This contains several fixes to DATA_FORMAT array in the adjust.py file.
 
 
 
