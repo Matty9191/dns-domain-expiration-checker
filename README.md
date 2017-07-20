@@ -30,6 +30,8 @@ $ workon dns-domain-expiration-checker
 3. Pull down Andrew's updated module:
 <pre>
 $ pip install git+git://github.com/gen1us2k/python-whois.git
+4. Clone this repo to gget the script
+$ git clone https://github.com/Matty9191/dns-domain-expiration-checker.git
 </pre>
 4. Run the script against the domains you want to check.
 
