@@ -38,7 +38,8 @@ $ git clone https://github.com/Matty9191/dns-domain-expiration-checker.git
 5. Run the script against the domains you want to check (this assume you are in the root of your virtualenv):
 <pre>
 $ ns-domain-expiration-checker/ns-domain-expiration-checker.py ....
-6. Add this to cron.
+</pre>
+6. Automate this process.
 
 
 
