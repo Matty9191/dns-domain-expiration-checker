@@ -30,10 +30,16 @@ $ workon dns-domain-expiration-checker
 3. Pull down Andrew's updated module:
 <pre>
 $ pip install git+git://github.com/gen1us2k/python-whois.git
-4. Clone this repo to gget the script
+</pre>
+4. Clone this repo to gget the script:
+<pre>
 $ git clone https://github.com/Matty9191/dns-domain-expiration-checker.git
 </pre>
-4. Run the script against the domains you want to check.
+5. Run the script against the domains you want to check (this assume you are in the root of your virtualenv):
+<pre>
+$ ns-domain-expiration-checker/ns-domain-expiration-checker.py ....
+6. Add this to cron.
+
 
 
 
