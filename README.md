@@ -1,4 +1,4 @@
-# Checking DNS DOmain Expiration
+# Checking DNS Domain Expiration
 
 If you are here you may have had a domain expire and dealt with the annoyances that go with reclaiming it. It's no fun is it? To prevent yourself from dealing with this again you can install and run dns-domain-expiration-checker to monitor your domains. The script is easy to install and will send you an e-mail if your domain is set to expire. If you have a single domain to monitor you can run the following:
 <pre>
