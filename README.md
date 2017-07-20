@@ -41,6 +41,8 @@ $ ns-domain-expiration-checker/ns-domain-expiration-checker.py ....
 </pre>
 6. Automate this process.
 
+Now if you are feeling frisky you can install the existing Python whois module (available via apt, yum and pip) and skip steps 1 - 3. If you get datatime format
+
 
 
 
