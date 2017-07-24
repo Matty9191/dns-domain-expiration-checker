@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Program: DNS Domain Expiration Checker
 # Author: Matty < matty91 at gmail dot com >
-# Current Version: 1.3
+# Current Version: 1.2
 # Date: 07-24-2017
 # License:
 #  This program is free software; you can redistribute it and/or modify
@@ -52,6 +52,7 @@ def send_whois_query(domain):
        Issue a WHOIS query for the domain passed as an argument. return
        the expiration date and registrar
     """
+    debug("Sending a WHOIS query for the domain %s" % domain)
     try:
         query_result = whois.query(domain)
     except:
@@ -159,7 +160,6 @@ def main():
        with open(conf_options["domainfile"], "r") as domains_to_process:
            for line in domains_to_process:
                 domainname, expiration_days = line.split()
-                debug("Checking domain %s" % domainname)
                 expiration_date, registrar = send_whois_query(domainname)
                 days_remaining = calculate_expiration_days(expiration_days, expiration_date)
 
@@ -169,12 +169,11 @@ def main():
                 if conf_options["interactive"]:
                     print_domain(domainname, registrar, expiration_date, days_remaining)
 
-                # Need to wait between queries to avoid triggering DOS measures like this:
+                # Need to wait between queries to avoid triggering DOS measures like so:
                 # Your IP has been restricted due to excessive access, please wait a bit
                 time.sleep(conf_options["sleeptime"])
 
    elif conf_options["domainname"]:
-       debug("Checking domain %s" % conf_options["domainname"] )
        expiration_date, registrar = send_whois_query(conf_options["domainname"])
        days_remaining = calculate_expiration_days(conf_options["expiredays"], expiration_date)
 
@@ -184,7 +183,7 @@ def main():
        if conf_options["interactive"]:
            print_domain(conf_options["domainname"], registrar, expiration_date, days_remaining)
 
-       # Need to wait between queries to avoid triggering DOS measures like this:
+       # Need to wait between queries to avoid triggering DOS measures like so:
        # Your IP has been restricted due to excessive access, please wait a bit
        time.sleep(conf_options["sleeptime"])
 
