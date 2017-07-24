@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # Program: DNS Domain Expiration Checker
 # Author: Matty < matty91 at gmail dot com >
-# Current Version: 1.1
-# Date: 07-24-2017
+# Current Version: 1.0
+# Date: 07-20-2017
 # License:
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,6 +25,13 @@ from email.MIMEText import MIMEText
 
 DEBUG = 0
 
+def debug(string_to_print):
+    """
+       Helper function to assist with printing debug messages.
+    """
+    if DEBUG:
+        print(string_to_print)
+
 
 def print_heading():
     """
@@ -38,14 +45,6 @@ def print_domain(domain, registrar, expiration_date, days_remaining):
        Pretty print the domain information on stdout
     """
     print("%-25s  %-30s  %-20s  %-4s" % (domain, registrar, expiration_date, days_remaining))
-
-
-def debug(string_to_print):
-    """
-       Helper function to assist with printing debug messages.
-    """
-    if DEBUG:
-        print(string_to_print)
 
 
 def send_whois_query(domain):
@@ -184,4 +183,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-(domain-check) 
