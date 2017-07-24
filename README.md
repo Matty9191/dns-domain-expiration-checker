@@ -14,7 +14,9 @@ google.com                 MARKMONITOR INC.                2020-09-14 00:00:00  
 
 To generate an e-mail when a domain is about to expire you can pass a single domain nad threshold to the script:
 
-$ dns-domain-expiration-checker.py --domainname prefetch.net --email --expiredays 2000
+<pre>
+$ dns-domain-expiration-checker.py --domainname prefetch.net --email --expiredays 90
+</pre>
 
 Or you can define multiple domains in a file and pass that as an argument:
 
