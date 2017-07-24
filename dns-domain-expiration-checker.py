@@ -102,7 +102,7 @@ def domain_expire_notify(domain, config_options, days):
 
     # Send outbound e-mail if a rcpt is passed in
     if config_options["email"]:
-        send_expire_email(domain, days)
+        send_expire_email(domain, days, config_options)
 
 
 def send_expire_email(domain, days, config_options):
