@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # Program: DNS Domain Expiration Checker
 # Author: Matty < matty91 at gmail dot com >
-# Current Version: 1.0
-# Date: 07-20-2017
+# Current Version: 1.2
+# Date: 07-24-2017
 # License:
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ def send_whois_query(domain):
     return query_result.expiration_date, query_result.registrar
 
 
-def calculate_dns_expiration(domain, expire_days, expiration_date):
+def calculate_expiration_days(expire_days, expiration_date):
     """
        Check to see when a domain will expire
     """
@@ -155,7 +155,7 @@ def main():
                 domainname, expiration_days = line.split()
                 debug("Checking domain %s" % domainname)
                 expiration_date, registrar = send_whois_query(domainname)
-                days_remaining = calculate_dns_expiration(domainname, expiration_days, expiration_date)
+                days_remaining = calculate_expiration_days(expiration_days, expiration_date)
 
                 if check_expired(domainname, expiration_days, days_remaining):
                     domain_expire_notify(domainname, days_remaining, conf_options)
@@ -166,15 +166,17 @@ def main():
                 # Need to wait between queries to avoid triggering DOS measures like this:
                 # Your IP has been restricted due to excessive access, please wait a bit
                 time.sleep(conf_options["sleeptime"])
-   elif domainname:
-       debug("Checking domain %s" % domainname)
-       expiration_date, registrar = send_whois_query(domainname)
-       days_remaining = calculate_dns_expiration(domainname, expire_days)
-       if check_expired(domainname, expire_days, days_remaining):
-           domain_expire_notify(domainname, days_remaining, conf_options)
+
+   elif conf_options["domainname"]:
+       debug("Checking domain %s" % conf_options["domainname"] )
+       expiration_date, registrar = send_whois_query(conf_options["domainname"])
+       days_remaining = calculate_expiration_days(conf_options["expiredays"], expiration_date)
+
+       if check_expired(conf_options["domainname"], conf_options["expiredays"], days_remaining):
+           domain_expire_notify(conf_options["domainname"], days_remaining, conf_options)
 
        if conf_options["interactive"]:
-           print_domain(domain, registrar, expiration_date, days_remaining)
+           print_domain(conf_options["domainname"], registrar, expiration_date, days_remaining)
 
        # Need to wait between queries to avoid triggering DOS measures like this:
        # Your IP has been restricted due to excessive access, please wait a bit
