@@ -2,7 +2,7 @@
 # Program: DNS Domain Expiration Checker
 # Author: Matty < matty91 at gmail dot com >
 # Current Version: 1.1
-# Date: 07-20-2017
+# Date: 07-24-2017
 # License:
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
