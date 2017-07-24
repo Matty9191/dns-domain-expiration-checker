@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Program: DNS Domain Expiration Checker
 # Author: Matty < matty91 at gmail dot com >
-# Current Version: 1.2
+# Current Version: 1.3
 # Date: 07-24-2017
 # License:
 #  This program is free software; you can redistribute it and/or modify
@@ -65,7 +65,12 @@ def calculate_expiration_days(expire_days, expiration_date):
     """
        Check to see when a domain will expire
     """
-    domain_expire = expiration_date - datetime.now()
+    try:
+        domain_expire = expiration_date - datetime.now()
+    except:
+        print("The registrar date formats may have changed.")
+        print("Please send a copy of your WHOIS data to the program author")
+        sys.exit(1)
 
     debug("Domain expire days %s, Expire warning days %s" % (domain_expire.days, expire_days))
 
@@ -75,7 +80,7 @@ def calculate_expiration_days(expire_days, expiration_date):
         return 0
 
 
-def check_expired(domainname, expiration_days, days_remaining):
+def check_expired(expiration_days, days_remaining):
     """
        Check to see if a domain has passed the expiration
        day threshold. If so send out notifications
@@ -86,7 +91,7 @@ def check_expired(domainname, expiration_days, days_remaining):
         return 0
 
 
-def domain_expire_notify(domain, days, config_options):
+def domain_expire_notify(domain, config_options, days):
     """
        Functions to call when a domain is about to expire. Adding support
        for Nagios, SNMP, etc. can be done by defining a new function and
@@ -96,7 +101,7 @@ def domain_expire_notify(domain, days, config_options):
 
     # Send outbound e-mail if a rcpt is passed in
     if config_options["email"]:
-        send_expire_email(domain, days, config_options)
+        send_expire_email(domain, days)
 
 
 def send_expire_email(domain, days, config_options):
@@ -136,8 +141,9 @@ def processcli():
     parser.add_argument('--smtpto', default="root", help="SMTP To: address.")
     parser.add_argument('--smtpfrom', default="root", help="SMTP From: address.")
 
+    # Return a dict() with all of the arguments passed in
     return(vars(parser.parse_args()))
-           
+
 
 def main():
    """
@@ -157,8 +163,8 @@ def main():
                 expiration_date, registrar = send_whois_query(domainname)
                 days_remaining = calculate_expiration_days(expiration_days, expiration_date)
 
-                if check_expired(domainname, expiration_days, days_remaining):
-                    domain_expire_notify(domainname, days_remaining, conf_options)
+                if check_expired(expiration_days, days_remaining):
+                    domain_expire_notify(domainname, conf_options, days_remaining)
 
                 if conf_options["interactive"]:
                     print_domain(domainname, registrar, expiration_date, days_remaining)
@@ -172,8 +178,8 @@ def main():
        expiration_date, registrar = send_whois_query(conf_options["domainname"])
        days_remaining = calculate_expiration_days(conf_options["expiredays"], expiration_date)
 
-       if check_expired(conf_options["domainname"], conf_options["expiredays"], days_remaining):
-           domain_expire_notify(conf_options["domainname"], days_remaining, conf_options)
+       if check_expired(conf_options["expiredays"], days_remaining):
+           domain_expire_notify(conf_options["domainname"], conf_options, days_remaining)
 
        if conf_options["interactive"]:
            print_domain(conf_options["domainname"], registrar, expiration_date, days_remaining)
