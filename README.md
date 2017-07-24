@@ -1,8 +1,8 @@
 # Checking DNS Domain Expiration
 
-If you are here you may have had a domain expire and dealt with the annoyances that go with reclaiming it. It's no fun is it? To prevent yourself from dealing with this again you can install and run dns-domain-expiration-checker to monitor your domains. The script is easy to install and will send you an e-mail if your domain is set to expire in the near future. You can also use the scriupt to view the registrars and expiration dates. The following examples will walk you through using the script.
+If you are here you may have had a domain expire and dealt with the annoyances that go with reclaiming it. It's no fun is it? To prevent yourself from dealing with this again you can install and run dns-domain-expiration-checker.py to monitor your domains. The script is easy to install and will send you an e-mail if your domain is set to expire in the near future. You can also use the script to view the registrars and expiration dates for your domains. Now to some examples.
 
-To interactively view the expiration dates and registrars for a batch of domains you can run the script with the "--interactive
+To interactively view the expiration dates and registrars for a list of domains you can run the script with the "--interactive
 " option:
 <pre>
 $ dns-domain-expiration-checker.py --interactive --domainfile domains
@@ -18,7 +18,7 @@ To generate an e-mail when a domain is about to expire you can pass a domain and
 $ dns-domain-expiration-checker.py --domainname prefetch.net --email --expiredays 90
 </pre>
 
-This will generate an e-mail if the domain prefetch.net is set to expire in the next 90-days. You can also add several domains and expiration intervals to a file and pass that as an argument to the script:
+This will generate an e-mail if the domain prefetch.net is set to expire in the next 90-days. You can also add several domains and expiration intervals to a file and pass that as an argument:
 
 <pre>
 $ cat domains
