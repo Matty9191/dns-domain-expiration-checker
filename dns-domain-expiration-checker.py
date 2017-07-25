@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Program: DNS Domain Expiration Checker
 # Author: Matty < matty91 at gmail dot com >
-# Current Version: 2.0
+# Current Version: 3.0
 # Date: 07-24-2017
 # License:
 #  This program is free software; you can redistribute it and/or modify
@@ -57,6 +57,9 @@ def send_whois_query(domain):
         query_result = whois.query(domain)
     except:
         print("Unable to retrieve WHOIS data for domain %s" % domain)
+        print("Please check to make sure you aren't running the")
+        print("script too quickly. That may trigger DDOS protection")
+        print("measures on the WHOIS server.")
         sys.exit(1)
 
     return query_result.expiration_date, query_result.registrar
@@ -136,7 +139,7 @@ def processcli():
     parser.add_argument('--email', action="store_true", help="Enable debugging output.")
     parser.add_argument('--interactive',action="store_true", help="Enable debugging output.")
     parser.add_argument('--expiredays', default=10000, type=int, help="Expiration threshold to check against.")
-    parser.add_argument('--sleeptime', default=5, help="Time to sleep between whois queries.")
+    parser.add_argument('--sleeptime', default=60, type=int, help="Time to sleep between whois queries.")
     parser.add_argument('--smtpserver', default="localhost", help="SMTP server to use.")
     parser.add_argument('--smtpport', default=25, help="SMTP port to connect to.")
     parser.add_argument('--smtpto', default="root", help="SMTP To: address.")
