@@ -34,7 +34,7 @@ REGISTRAR_STRINGS = [
                       "Registrar:"
                     ]
 
-DEBUG = 1
+DEBUG = 0
 
 
 def debug(string_to_print):
@@ -79,9 +79,9 @@ stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         print("Unable to read from the Popen pipe. Exception %s" % e)
         sys.exit(1)
 
-    if p.returncode != 0:
-        print("The WHOIS utility exit()'ed with a non-zero return code")
-        sys.exit(1)
+    #if p.returncode != 0:
+    #    print("The WHOIS utility exit()'ed with a non-zero return code")
+    #    sys.exit(1)
 
     return(parse_whois_data(whois_data))
 
