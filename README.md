@@ -52,11 +52,9 @@ $ git clone https://github.com/Matty9191/dns-domain-expiration-checker.git
 </pre>
 5. Run the script against the domains you want to check (this assume you are in the root of your virtualenv):
 <pre>
-$ ns-domain-expiration-checker/ns-domain-expiration-checker.py ....
+$ dns-domain-expiration-checker/ns-domain-expiration-checker.py ....
 </pre>
-6. Automate this process.
-
-Now if you are feeling frisky you can install the Python whois module from your favorite remote repository (available through apt, yum and pip) and skip steps 1 - 3. If you get a "Unknown date format" message when you run it you will need to install the newer Python whois module. This contains several enhancements to the DATA_FORMAT array in the adjust.py file.
+6. Automate the domain checking process.
 
 
 
