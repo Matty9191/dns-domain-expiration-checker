@@ -46,7 +46,7 @@ $ workon dns-domain-expiration-checker
 <pre>
 $ pip install python-dateutils
 </pre>
-4. Clone this repo to gget the script:
+4. Clone this repo:
 <pre>
 $ git clone https://github.com/Matty9191/dns-domain-expiration-checker.git
 </pre>
