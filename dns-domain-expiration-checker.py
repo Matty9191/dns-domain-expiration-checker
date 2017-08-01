@@ -155,17 +155,14 @@ def send_expire_email(domain, days, config_options):
     msg = MIMEMultipart()
     msg['From'] = config_options["smtpfrom"]
     msg['To'] = config_options["smtpto"]
-    msg['Subject'] = "The DNS Domain %s is set to expire in %d days" %
-(domain, days)
+    msg['Subject'] = "The DNS Domain %s is set to expire in %d days" % (domain, days)
 
     body = "Time to renew %s" % domain
     msg.attach(MIMEText(body, 'plain'))
 
-    smtp_connection =
-smtplib.SMTP(config_options["smtpserver"],config_options["smtpport"])
+    smtp_connection = smtplib.SMTP(config_options["smtpserver"],config_options["smtpport"])
     message = msg.as_string()
-    smtp_connection.sendmail(config_options["smtpfrom"],
-config_options["smtpto"], message)
+    smtp_connection.sendmail(config_options["smtpfrom"], config_options["smtpto"], message)
     smtp_connection.quit()
 
 
@@ -176,24 +173,16 @@ def processcli():
     """
     parser = argparse.ArgumentParser(description='DNS Statistics Processor')
 
-    parser.add_argument('--domainfile', help="Path to file with list
-of domains and expiration intervals.")
+    parser.add_argument('--domainfile', help="Path to file with list of domains and expiration intervals.")
     parser.add_argument('--domainname', help="Domain to check expiration on.")
-    parser.add_argument('--email', action="store_true", help="Enable
-debugging output.")
-    parser.add_argument('--interactive',action="store_true",
-help="Enable debugging output.")
-    parser.add_argument('--expiredays', default=10000, type=int,
-help="Expiration threshold to check against.")
-    parser.add_argument('--sleeptime', default=60, type=int,
-help="Time to sleep between whois queries.")
-    parser.add_argument('--smtpserver', default="localhost",
-help="SMTP server to use.")
-    parser.add_argument('--smtpport', default=25, help="SMTP port to
-connect to.")
+    parser.add_argument('--email', action="store_true", help="Enable debugging output.")
+    parser.add_argument('--interactive',action="store_true", help="Enable debugging output.")
+    parser.add_argument('--expiredays', default=10000, type=int, help="Expiration threshold to check against.")
+    parser.add_argument('--sleeptime', default=60, type=int, help="Time to sleep between whois queries.")
+    parser.add_argument('--smtpserver', default="localhost", help="SMTP server to use.")
+    parser.add_argument('--smtpport', default=25, help="SMTP port to connect to.")
     parser.add_argument('--smtpto', default="root", help="SMTP To: address.")
-    parser.add_argument('--smtpfrom', default="root", help="SMTP From:
-address.")
+    parser.add_argument('--smtpfrom', default="root", help="SMTP From: address.")
 
     # Return a dict() with all of the arguments passed in
     return(vars(parser.parse_args()))
@@ -215,40 +204,31 @@ def main():
                try:
                     domainname, expiration_days = line.split()
                except Exception as e:
-                   print("Unable to parse configuration file. Problem
-line \"%s\"" % line.strip())
+                   print("Unable to parse configuration file. Problem line \"%s\"" % line.strip())
                    sys.exit(1)
 
                expiration_date, registrar = make_whois_query(domainname)
-               days_remaining =
-calculate_expiration_days(expiration_days, expiration_date)
+               days_remaining = calculate_expiration_days(expiration_days, expiration_date)
 
                if check_expired(expiration_days, days_remaining):
-                   domain_expire_notify(domainname, conf_options,
-days_remaining)
+                   domain_expire_notify(domainname, conf_options, days_remaining)
 
                if conf_options["interactive"]:
-                   print_domain(domainname, registrar,
-expiration_date, days_remaining)
+                   print_domain(domainname, registrar, expiration_date, days_remaining)
 
-               # Need to wait between queries to avoid triggering DOS
-measures like so:
-               # Your IP has been restricted due to excessive access,
-please wait a bit
+               # Need to wait between queries to avoid triggering DOS measures like so:
+               # Your IP has been restricted due to excessive access, please wait a bit
                time.sleep(conf_options["sleeptime"])
 
    elif conf_options["domainname"]:
        expiration_date, registrar = make_whois_query(conf_options["domainname"])
-       days_remaining =
-calculate_expiration_days(conf_options["expiredays"], expiration_date)
+       days_remaining = calculate_expiration_days(conf_options["expiredays"], expiration_date)
 
        if check_expired(conf_options["expiredays"], days_remaining):
-           domain_expire_notify(conf_options["domainname"],
-conf_options, days_remaining)
+           domain_expire_notify(conf_options["domainname"], conf_options, days_remaining)
 
        if conf_options["interactive"]:
-           print_domain(conf_options["domainname"], registrar,
-expiration_date, days_remaining)
+           print_domain(conf_options["domainname"], registrar, expiration_date, days_remaining)
 
        # Need to wait between queries to avoid triggering DOS measures like so:
        # Your IP has been restricted due to excessive access, please wait a bit
