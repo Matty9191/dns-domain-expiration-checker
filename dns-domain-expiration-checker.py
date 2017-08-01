@@ -16,7 +16,6 @@
 
 import sys
 import time
-import whois
 import argparse
 import smtplib
 import dateutil.parser
@@ -79,7 +78,9 @@ stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         print("Unable to read from the Popen pipe. Exception %s" % e)
         sys.exit(1)
 
-    #if p.returncode != 0:
+    # TODO: Work around whois issue #55 which returns a non-zero
+    # exit code for valid domains.
+    # if p.returncode != 0:
     #    print("The WHOIS utility exit()'ed with a non-zero return code")
     #    sys.exit(1)
 
