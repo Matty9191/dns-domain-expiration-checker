@@ -2,7 +2,7 @@
 
 If you are here you may have had a domain expire and dealt with the annoyances that go with reclaiming it. It's no fun is it? To prevent yourself from dealing with this again you can install and run dns-domain-expiration-checker.py to monitor your domains. The script is easy to install and will send you an e-mail if your domain is set to expire in the near future. You can also use the script to view the registrars and expiration dates for your domains. Now to some examples.
 
-To interactively view the expiration dates and registrars for a list of domains you can run the script with the "--interactive
+To interactively view the expiration dates and registrars for a list of domains run the script with the "--interactive
 " option:
 <pre>
 $ dns-domain-expiration-checker.py --interactive --domainfile domains
