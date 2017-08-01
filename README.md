@@ -32,7 +32,7 @@ $ dns-domain-expiration-checker.py --domainfile domains --email --smtpserver smt
 
 # Installation
 
-The dns-domain-expiration-checker.py script relies on the dateutil PiPY pacakge to normalize dates. This module is included with the Python 3 runtime but will need to be installed on systems that still utilize Python 2. Here are the steps to install it:
+The dns-domain-expiration-checker.py script relies on the dateutil PiPY pacakge to normalize dates. Here are the steps to get this script working:
 
 1. Create a virtualenv to run dns-domain-expiration-checker in:
 <pre>
