@@ -32,7 +32,7 @@ $ dns-domain-expiration-checker.py --domainfile domains --email --smtpserver smt
 
 # Installation
 
-The dns-domain-expiration-checker.py script uses the Python whois module to retrieve whois data. The version that is currently in PiPy has a number of issues which prevent it from parsing several registrar's WHOIS data. Fortunately Andrew Minkin fork'ed the original code and modified it to work with the dates from various registrars. To get the most out of the script I would highly suggest pulling down Andrew's code. Here are the steps to do this:
+The dns-domain-expiration-checker.py script relies on the dateutil PiPY pacakge to normalize dates. This module is included with the Python 3 runtime but will need to be installed on systems that still utilize Python 2. Here are the steps to install it:
 
 1. Create a virtualenv to run dns-domain-expiration-checker in:
 <pre>
@@ -42,9 +42,9 @@ $ mkproject dns-domain-expiration-checker
 <pre>
 $ workon dns-domain-expiration-checker
 </pre>
-3. Pull down Andrew's updated module:
+3. Pull down dateutils with pip:
 <pre>
-$ pip install git+git://github.com/gen1us2k/python-whois.git
+$ pip install python-dateutils
 </pre>
 4. Clone this repo to gget the script:
 <pre>
