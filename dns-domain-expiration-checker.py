@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Program: DNS Domain Expiration Checker
 # Author: Matty < matty91 at gmail dot com >
-# Current Version: 6.0
+# Current Version: 7.0
 # Date: 08-02-2017
 # License:
 #  This program is free software; you can redistribute it and/or modify
@@ -191,50 +191,50 @@ def processcli():
 
 
 def main():
-   """
-       Main loop
-   """
-   days_remaining = 0
-   conf_options = processcli()
+    """
+        Main loop
+    """
+    days_remaining = 0
+    conf_options = processcli()
 
-   if conf_options["interactive"]:
-       print_heading()
+    if conf_options["interactive"]:
+        print_heading()
 
-   if conf_options["domainfile"]:
-       with open(conf_options["domainfile"], "r") as domains_to_process:
-           for line in domains_to_process:
-               try:
-                    domainname, expiration_days = line.split()
-               except Exception as e:
-                   print("Unable to parse configuration file. Problem line \"%s\"" % line.strip())
-                   sys.exit(1)
+    if conf_options["domainfile"]:
+        with open(conf_options["domainfile"], "r") as domains_to_process:
+            for line in domains_to_process:
+                try:
+                     domainname, expiration_days = line.split()
+                except Exception as e:
+                    print("Unable to parse configuration file. Problem line \"%s\"" % line.strip())
+                    sys.exit(1)
 
-               expiration_date, registrar = make_whois_query(domainname)
-               days_remaining = calculate_expiration_days(expiration_days, expiration_date)
+                expiration_date, registrar = make_whois_query(domainname)
+                days_remaining = calculate_expiration_days(expiration_days, expiration_date)
 
-               if check_expired(expiration_days, days_remaining):
-                   domain_expire_notify(domainname, conf_options, days_remaining)
+                if check_expired(expiration_days, days_remaining):
+                    domain_expire_notify(domainname, conf_options, days_remaining)
 
-               if conf_options["interactive"]:
-                   print_domain(domainname, registrar, expiration_date, days_remaining)
+                if conf_options["interactive"]:
+                    print_domain(domainname, registrar, expiration_date, days_remaining)
 
-               # Need to wait between queries to avoid triggering DOS measures like so:
-               # Your IP has been restricted due to excessive access, please wait a bit
-               time.sleep(conf_options["sleeptime"])
+                # Need to wait between queries to avoid triggering DOS measures like so:
+                # Your IP has been restricted due to excessive access, please wait a bit
+                time.sleep(conf_options["sleeptime"])
 
-   elif conf_options["domainname"]:
-       expiration_date, registrar = make_whois_query(conf_options["domainname"])
-       days_remaining = calculate_expiration_days(conf_options["expiredays"], expiration_date)
+    elif conf_options["domainname"]:
+        expiration_date, registrar = make_whois_query(conf_options["domainname"])
+        days_remaining = calculate_expiration_days(conf_options["expiredays"], expiration_date)
 
-       if check_expired(conf_options["expiredays"], days_remaining):
-           domain_expire_notify(conf_options["domainname"], conf_options, days_remaining)
+        if check_expired(conf_options["expiredays"], days_remaining):
+            domain_expire_notify(conf_options["domainname"], conf_options, days_remaining)
 
-       if conf_options["interactive"]:
-           print_domain(conf_options["domainname"], registrar, expiration_date, days_remaining)
+        if conf_options["interactive"]:
+            print_domain(conf_options["domainname"], registrar, expiration_date, days_remaining)
 
-       # Need to wait between queries to avoid triggering DOS measures like so:
-       # Your IP has been restricted due to excessive access, please wait a bit
-       time.sleep(conf_options["sleeptime"])
+        # Need to wait between queries to avoid triggering DOS measures like so:
+        # Your IP has been restricted due to excessive access, please wait a bit
+        time.sleep(conf_options["sleeptime"])
  
 
 if __name__ == "__main__":
