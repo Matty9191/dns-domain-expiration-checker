@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Program: DNS Domain Expiration Checker
 # Author: Matty < matty91 at gmail dot com >
-# Current Version: 5.0
+# Current Version: 6.0
 # Date: 08-02-2017
 # License:
 #  This program is free software; you can redistribute it and/or modify
@@ -97,7 +97,7 @@ def parse_whois_data(whois_data):
 
     for line in whois_data.splitlines():
         if any(expire_string in line for expire_string in EXPIRE_STRINGS):
-            expiration_date = dateutil.parser.parse(line.partition(": ")[2])
+            expiration_date = dateutil.parser.parse(line.partition(": ")[2], ignoretz=True)
 
         if any(registrar_string in line for registrar_string in
                REGISTRAR_STRINGS):
@@ -113,7 +113,7 @@ def calculate_expiration_days(expire_days, expiration_date):
     debug("Expiration date %s Time now %s" % (expiration_date, datetime.now()))
 
     try:
-        domain_expire = expiration_date.replace(tzinfo=None) - datetime.now()
+        domain_expire = expiration_date - datetime.now()
     except:
         print("Unable to calculate the expiration days")
         sys.exit(1)
