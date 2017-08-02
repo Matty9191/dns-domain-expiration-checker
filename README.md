@@ -44,7 +44,7 @@ $ workon dns-domain-expiration-checker
 </pre>
 3. Pull down dateutils with pip:
 <pre>
-$ pip install dateutil
+$ pip install python-dateutil
 </pre>
 4. Clone this repo:
 <pre>
