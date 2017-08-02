@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # Program: DNS Domain Expiration Checker
 # Author: Matty < matty91 at gmail dot com >
-# Current Version: 4.0
-# Date: 08-01-2017
+# Current Version: 5.0
+# Date: 08-02-2017
 # License:
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ def print_heading():
        Print a formatted heading when called interactively
     """
     print("%-25s  %-20s  %-30s  %-4s" % ("Domain Name", "Registrar",
-"Expiration Date", "Days Left"))
+          "Expiration Date", "Days Left"))
 
 
 def print_domain(domain, registrar, expiration_date, days_remaining):
@@ -57,7 +57,7 @@ def print_domain(domain, registrar, expiration_date, days_remaining):
        Pretty print the domain information on stdout
     """
     print("%-25s  %-20s  %-30s  %-d" % (domain, registrar,
-expiration_date, days_remaining))
+          expiration_date, days_remaining))
 
 
 def make_whois_query(domain):
@@ -67,7 +67,7 @@ def make_whois_query(domain):
     debug("Sending a WHOIS query for the domain %s" % domain)
     try:
         p = subprocess.Popen(['whois', domain],
-stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                             stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     except Exception as e:
         print("Unable to Popen() the whois binary. Exception %s" % e)
         sys.exit(1)
@@ -100,11 +100,9 @@ def parse_whois_data(whois_data):
             expiration_date = dateutil.parser.parse(line.partition(": ")[2])
 
         if any(registrar_string in line for registrar_string in
-REGISTRAR_STRINGS):
+               REGISTRAR_STRINGS):
             registrar = line.split("Registrar:")[1].strip()
 
-    debug("Returning the expiration date %s from the registrar %s" % (
-expiration_date, registrar))
     return expiration_date, registrar
 
 
@@ -113,9 +111,12 @@ def calculate_expiration_days(expire_days, expiration_date):
        Check to see when a domain will expire
     """
     debug("Expiration date %s Time now %s" % (expiration_date, datetime.now()))
-    domain_expire = expiration_date.replace(tzinfo=None) - datetime.now()
-    debug("Domain expire days %s, Expire warning days %s" %
-(domain_expire.days, expire_days))
+
+    try:
+        domain_expire = expiration_date.replace(tzinfo=None) - datetime.now()
+    except:
+        print("Unable to calculate the expiration days")
+        sys.exit(1)
 
     if domain_expire.days < expire_days:
         return domain_expire.days
@@ -152,7 +153,7 @@ def send_expire_email(domain, days, config_options):
        Generate an e-mail to let someone know a domain is about to expire
     """
     debug("Generating an e-mail to %s for domain %s" %
-(config_options["smtpto"], domain))
+         (config_options["smtpto"], domain))
     msg = MIMEMultipart()
     msg['From'] = config_options["smtpfrom"]
     msg['To'] = config_options["smtpto"]
@@ -234,8 +235,7 @@ def main():
        # Need to wait between queries to avoid triggering DOS measures like so:
        # Your IP has been restricted due to excessive access, please wait a bit
        time.sleep(conf_options["sleeptime"])
-
-      
+ 
 
 if __name__ == "__main__":
     main()
