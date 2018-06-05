@@ -26,7 +26,7 @@ from email.MIMEText import MIMEText
 
 EXPIRE_STRINGS = [ "Registry Expiry Date:",
                    "Expiration:",
-                   "Domain Expiration Date".
+                   "Domain Expiration Date",
                    "Registrar Registration Expiration Date:"
                  ]
 
