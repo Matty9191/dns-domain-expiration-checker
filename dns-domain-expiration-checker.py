@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # Program: DNS Domain Expiration Checker
 # Author: Matty < matty91 at gmail dot com >
-# Current Version: 7.0
-# Date: 08-02-2017
+# Current Version: 8.0
+# Date: 01-02-2019
 # License:
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -27,7 +27,8 @@ from email.MIMEText import MIMEText
 EXPIRE_STRINGS = [ "Registry Expiry Date:",
                    "Expiration:",
                    "Domain Expiration Date",
-                   "Registrar Registration Expiration Date:"
+                   "Registrar Registration Expiration Date:",
+                   "expire:"
                  ]
 
 REGISTRAR_STRINGS = [
