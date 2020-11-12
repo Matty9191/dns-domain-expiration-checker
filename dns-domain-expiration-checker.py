@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # Program: DNS Domain Expiration Checker
-# Author: Matty < matty91 at gmail dot com >
+# Author: Matty < matty at prefetch dot net >
 # Current Version: 9.1
 # Date: 01-27-2020
 # License:
